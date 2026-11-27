@@ -25,6 +25,10 @@ jobs:
           - os: ubuntu-24.04
             target: x86_64
     runs-on: ${{ matrix.os }}
+    env:
+      CARGO_BUILD_JOBS: "1"
+      CARGO_PROFILE_RELEASE_OPT_LEVEL: "1"
+      CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "256"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
