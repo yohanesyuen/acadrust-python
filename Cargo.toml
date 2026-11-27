@@ -1,0 +1,13 @@
+[package]
+name = "acadrust-python"
+version = "0.1.0"
+edition = "2021"
+license = "MPL-2.0"
+
+[lib]
+name = "_acadrust"
+crate-type = ["cdylib"]
+
+[dependencies]
+acadrust = "=0.6.8"
+pyo3 = { version = "=0.24.2", features = ["extension-module", "abi3-py313"] }

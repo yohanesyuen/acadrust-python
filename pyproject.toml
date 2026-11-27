@@ -1,0 +1,21 @@
+[build-system]
+requires = ["maturin==1.10.2"]
+build-backend = "maturin"
+
+[project]
+name = "acadrust-python"
+version = "0.1.0"
+description = "Native DWG and DXF conversion powered by acadrust"
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MPL-2.0"
+authors = [{name = "Yohanes Yuen"}]
+classifiers = ["Programming Language :: Python :: 3", "Programming Language :: Rust", "Operating System :: OS Independent"]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2", "ezdxf==1.4.2"]
+
+[tool.maturin]
+python-source = "python"
+module-name = "acadrust._acadrust"
+features = ["pyo3/extension-module"]
