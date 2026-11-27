@@ -1,4 +1,5 @@
 /target/
+/target-linux/
 /.venv/
 /dist/
 /.pytest_cache/

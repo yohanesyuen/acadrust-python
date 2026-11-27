@@ -1,7 +1,7 @@
 import os
 
 ACADRUST_VERSION: str
-SUPPORTED_VERSIONS: tuple[str, ...]
+SUPPORTED_VERSIONS: list[str]
 __version__: str
 
 class ConversionError(Exception): ...
