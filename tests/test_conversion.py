@@ -69,3 +69,16 @@ def test_truncated():
     dwg = acadrust.dxf_to_dwg_bytes(sample())
     with pytest.raises(acadrust.ConversionError):
         acadrust.dwg_to_dxf_bytes(dwg[:16])
+
+
+def test_dwg_round_trip():
+    first = acadrust.dxf_to_dwg_bytes(sample())
+    middle = acadrust.dwg_to_dxf_bytes(first)
+    second = acadrust.dxf_to_dwg_bytes(middle)
+    result = acadrust.dwg_to_dxf_bytes(second)
+    drawing = ezdxf.read(io.StringIO(result.decode("utf-8").replace("\r\n", "\n")))
+    line = drawing.modelspace().query("LINE")[0]
+    circle = drawing.modelspace().query("CIRCLE")[0]
+    assert tuple(line.dxf.start) == (1.0, 2.0, 0.0)
+    assert tuple(line.dxf.end) == (3.0, 4.0, 0.0)
+    assert circle.dxf.radius == 2.0
