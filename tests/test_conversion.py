@@ -53,3 +53,19 @@ def test_invalid():
         acadrust.dwg_to_dxf_bytes(b"invalid")
     with pytest.raises(ValueError):
         acadrust.dxf_to_dwg_bytes(sample(), "bad-version")
+
+
+@pytest.mark.parametrize("version", ["AC1015", "AC1027", "AC1032"])
+def test_target_versions(version):
+    dwg = acadrust.dxf_to_dwg_bytes(sample(), version)
+    assert dwg.startswith(version.encode())
+    dxf = acadrust.dwg_to_dxf_bytes(dwg, version)
+    encoding = "cp1252" if version == "AC1015" else "utf-8"
+    drawing = ezdxf.read(io.StringIO(dxf.decode(encoding).replace("\r\n", "\n")))
+    assert drawing.dxfversion == version
+
+
+def test_truncated():
+    dwg = acadrust.dxf_to_dwg_bytes(sample())
+    with pytest.raises(acadrust.ConversionError):
+        acadrust.dwg_to_dxf_bytes(dwg[:16])
